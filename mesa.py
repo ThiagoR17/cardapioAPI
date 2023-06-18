@@ -1,35 +1,32 @@
 from fastapi import FastAPI
-from models import Mesa
+from models import mesa
 from database import SessionLocal
 
 app = FastAPI()
 
-@app.post("/mesas/")
-def create_mesa(mesa: Mesa):
-    db = SessionLocal()
-    db.add(mesa)
-    db.commit()
-    db.refresh(mesa)
-    return mesa
+@app.get("/mesas/")
+def create_mesa(mesa: mesa):
+    
+    return {"OLA"}
 
 @app.get("/mesas/")
 def read_mesas():
     db = SessionLocal()
-    mesas = db.query(Mesa).all()
+    mesas = db.query(mesa).all()
     return mesas
 
 @app.get("/mesas/{mesa_id}")
 def read_mesa(mesa_id: int):
     db = SessionLocal()
-    mesa = db.query(Mesa).filter(Mesa.idmesas == mesa_id).first()
+    mesa = db.query(mesa).filter(mesa.idmesas == mesa_id).first()
     if mesa:
         return mesa
-    return {"error": "Mesa not found"}
+    return {"error": "Mesa não encontrada!"}
 
 @app.put("/mesas/{mesa_id}")
-def update_mesa(mesa_id: int, updated_mesa: Mesa):
+def update_mesa(mesa_id: int, updated_mesa: mesa):
     db = SessionLocal()
-    mesa = db.query(Mesa).filter(Mesa.idmesas == mesa_id).first()
+    mesa = db.query(mesa).filter(mesa.idmesas == mesa_id).first()
     if mesa:
         mesa.nome_cliente = updated_mesa.nome_cliente
         mesa.pedidos_idpedidos = updated_mesa.pedidos_idpedidos
@@ -40,7 +37,7 @@ def update_mesa(mesa_id: int, updated_mesa: Mesa):
 @app.delete("/mesas/{mesa_id}")
 def delete_mesa(mesa_id: int):
     db = SessionLocal()
-    mesa = db.query(Mesa).filter(Mesa.idmesas == mesa_id).first()
+    mesa = db.query(mesa).filter(mesa.idmesas == mesa_id).first()
     if mesa:
         db.delete(mesa)
         db.commit()

@@ -3,7 +3,6 @@ from pydantic import BaseModel
 from typing import List, Optional
 
 
-
 class Pedido(BaseModel):
     idpedidos: int
     valor_pedido: float
